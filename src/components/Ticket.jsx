@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import useAuth from "../hooks/useAuth"
-// import { usePDF } from "react-to-pdf"
+import { usePDF } from "react-to-pdf"
 
 export default function Ticket({ event, ticket }) {
     const { user } = useAuth()
-    // const { toPDF, targetRef } = usePDF({ filename: `${ticket.ticket.event}.pdf` })
+    const { toPDF, targetRef } = usePDF({ filename: `${ticket.ticket.event}.pdf` })
 
     const handleDownload = async () => {
         const response = await fetch(ticket.ticket.qrUrl);
@@ -17,13 +17,12 @@ export default function Ticket({ event, ticket }) {
         link.click();
         URL.revokeObjectURL(url); // liberar memoria
 
-        // toPDF()
+        toPDF()
     };
 
     return (
       <div className="h-1/2">
-        {/* <div ref={targetRef}> */}
-        <div>
+        <div ref={targetRef}>
             <h2 className="text-lg font-semibold mb-4 text-center">
                 Gracias por tu compra, {user?.name || user?.email}. Tu ticket está
                 listo
